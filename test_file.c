@@ -1,53 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
 #include "binary_trees.h"
-size_t binary_tree_height(const binary_tree_t *tree);
-size_t binary_tree_size(const binary_tree_t *tree);
-/**
- * binary_tree_is_perfect - checks if binary tree is perfect
- * @tree: pointer to root node
- * Return: if perfect 1, else 0
- */
-int binary_tree_is_perfect(const binary_tree_t *tree)
-{
-	int height, size;
 
-	if (tree == NULL)
-		return (0);
+binary_tree_t *findSibling(binary_tree_t *root, binary_tree_t *node);
 
-	height = binary_tree_height(tree);
-	size = binary_tree_size(tree);
+// Function to find the sibling of a node
+binary_tree_t *findSibling(binary_tree_t *root, binary_tree_t *node) {
+    if (root == NULL || root == node)
+        return NULL;
 
-	return (size == (1 << height) - 1);
-}
-/**
- * binary_tree_size - measures the size
- * @tree: pointer to root node
- * Return: size of binary tree
- */
-size_t binary_tree_size(const binary_tree_t *tree)
-{
+    // Check if the node is the left child of its parent
+    if (root->left == node)
+        return root->right;
 
-	if (tree == NULL)
-		return (0);
+    // Check if the node is the right child of its parent
+    if (root->right == node)
+        return root->left;
 
-	return (binary_tree_size(tree->left) + binary_tree_size(tree->right) + 1);
-}
-/**
- * binary_tree_height - measures the height of a binary tree
- * @tree: pointer to root node
- * Return: height amount
- */
-size_t binary_tree_height(const binary_tree_t *tree)
-{
-	size_t right, left;
+    // Recursively search for the sibling in the left and right subtrees
+    binary_tree_t *sibling = findSibling(root->left, node);
+    if (sibling == NULL)
+        sibling = findSibling(root->right, node);
 
-	if (tree == NULL)
-		return (0);
-
-	left = binary_tree_height(tree->left) + 1;
-	right = binary_tree_height(tree->right) + 1;
-
-	if (right > left)
-		return (right);
-	else
-		return (left);
+    return sibling;
 }
