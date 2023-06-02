@@ -10,6 +10,8 @@ binary_tree_t *binary_tree_sibling(binary_tree_t *node)
 {
 	binary_tree_t *temp, *twin;
 
+	if (node == NULL)
+		return (NULL);
 	temp = node;
 	while (temp->parent != NULL)
 	{
