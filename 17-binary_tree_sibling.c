@@ -28,6 +28,8 @@ binary_tree_t *binary_tree_sibling(binary_tree_t *node)
  */
 binary_tree_t *findSibling(binary_tree_t *root, binary_tree_t *node)
 {
+	binary_tree_t *sibling;
+
 	if (root == NULL || root == node)
 		return (NULL);
 
@@ -40,7 +42,7 @@ binary_tree_t *findSibling(binary_tree_t *root, binary_tree_t *node)
 		return (root->left);
 
 	/* Recursively search for the sibling in the left and right subtrees */
-	binary_tree_t *sibling = findSibling(root->left, node);
+	sibling = findSibling(root->left, node);
 
 	if (sibling == NULL)
 		sibling = findSibling(root->right, node);
